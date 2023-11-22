@@ -59,6 +59,41 @@ pub struct Attestation {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct NestedTEE {
+    #[serde(rename = "attestation-report")]
+    pub attestation_report: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct CustomClaims {
+    #[serde(rename = "nonce")]
+    pub nonce: String,
+    #[serde(rename = "inner-tee-pubkey")]
+    pub inner_tee_pubkey: TeePubKey,
+    #[serde(rename = "nested-tee")]
+    pub nested_tee: NestedTEE,
+}
+
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct TeeEvidence {
+    #[serde(rename = "tee-type")]
+    pub tee_type: Tee,
+    #[serde(rename = "cpu-evidence")]
+    pub cpu_evidence: String,
+    #[serde(rename = "custom-claims")]
+    pub custom_claims: CustomClaims,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct CombinedAttestation {
+    #[serde(rename = "tee-pubkey")]
+    pub tee_pubkey: TeePubKey,
+    #[serde(rename = "tee-evidence")]
+    pub tee_evidence: TeeEvidence,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Response {
     pub protected: String,
     pub encrypted_key: String,
